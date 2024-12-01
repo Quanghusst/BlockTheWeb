@@ -56,7 +56,7 @@ run_as_admin()
 while(True):
 
     query = input("Input search (CTRL + C to exit): ")
-    search_results = google_search(query)
+    search_results = list(set(google_search(query)))
     print("Results search: ")
     # In danh sách
     for i in range(0, len(search_results), 3):
