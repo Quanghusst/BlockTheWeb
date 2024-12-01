@@ -1,3 +1,7 @@
+# Before the run
+```bash
+pip install requests beautifulsoup4 lxml
+```
 # Run
 ```bash
 .\run.bat
