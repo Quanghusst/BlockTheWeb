@@ -74,6 +74,7 @@ while(True):
                 if f"127.0.0.1       {domain}\n" not in existing_lines:
                     file.write(f"127.0.0.1       {domain}\n")
         print(f"\nTHE DATA HAS BEEN LOGGED {pathToHostsFile}.")
+        print(f"ALL THE WEBSITE HAS BEEN BLOCKED!!!")
         input("Press Enter to continue...")
         os.system('cls' if os.name == 'nt' else 'clear')
     except PermissionError:
