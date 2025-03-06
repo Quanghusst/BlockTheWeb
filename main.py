@@ -1,13 +1,14 @@
 from duckduckgo_search import DDGS
+from urllib.parse import urlparse
 import sys
 import ctypes
 import os
 
-
 def duckduckgo_search(query, num_results=10):
     with DDGS() as ddgs:
-        return [r["href"] for r in ddgs.text(query, max_results=num_results)]
-
+        results = [r["href"] for r in ddgs.text(query, max_results=num_results)]
+        domains = {urlparse(url).netloc for url in results}  # Lấy domain và loại bỏ trùng lặp
+        return domains
 
 def is_admin():
     """
@@ -49,8 +50,8 @@ while True:
         continue
 
     print("\nResults found:")
-    for i in range(0, len(search_results), 3):
-        print(*search_results[i:i + 3], sep='           ')
+    for domain in search_results:
+        print(f"- {domain}")
 
     try:
         # Đọc nội dung hiện tại của file hosts
