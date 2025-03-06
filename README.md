@@ -1,3 +1,7 @@
+# NOTE
+This code runs search engine is duckduckgo!
+---
+
 # Before the run
 ```bash
 pip install requests beautifulsoup4 lxml

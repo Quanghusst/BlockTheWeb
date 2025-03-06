@@ -1,34 +1,13 @@
-import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse
+from duckduckgo_search import DDGS
 import sys
-import os
 import ctypes
-# pip install beautifulsoup4  lxml
+import os
 
 
-def google_search(query, num_pages = 9):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-    }
-    results = []
+def duckduckgo_search(query, num_results=10):
+    with DDGS() as ddgs:
+        return [r["href"] for r in ddgs.text(query, max_results=num_results)]
 
-    for page in range(num_pages):
-        search_url = f"https://www.google.com/search?q={query}&start={page * 10}"
-        response = requests.get(search_url, headers=headers)
-        
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'lxml')
-            
-            for item in soup.select('.tF2Cxc'):
-                link = item.select_one('.yuRUbf a')['href'] if item.select_one('.yuRUbf a') else 'No link'
-                domain = urlparse(link).netloc if link != 'No link' else 'No domain'
-                results.append(domain)
-        else:
-            print(f"Failed to retrieve search results on page {page + 1}. Status code: {response.status_code}")
-            break
-    
-    return results
 
 def is_admin():
     """
@@ -39,45 +18,59 @@ def is_admin():
     except:
         return False
 
+
 def run_as_admin():
     """
     Yêu cầu quyền admin và khởi động lại script nếu cần.
     """
     if not is_admin():
-        print("Script is asking for admin permit......")
-        # Yêu cầu quyền admin và khởi động lại script
+        print("Script is asking for admin permission...")
         ctypes.windll.shell32.ShellExecuteW(
             None, "runas", sys.executable, " ".join(sys.argv), None, 1
         )
-        sys.exit()  # Thoát để script mới chạy với quyền admin
+        sys.exit()
+
+
 run_as_admin()
 
+# Địa chỉ file hosts
+pathToHostsFile = r"C:\Windows\System32\Drivers\etc\hosts"
 
-while(True):
+while True:
+    query = input("Input search (CTRL + C to exit): ").strip()
+    if not query:
+        print("Query cannot be empty!")
+        continue
 
-    query = input("Input search (CTRL + C to exit): ")
-    search_results = list(set(google_search(query)))
-    print("Results search: ")
-    # In danh sách
+    search_results = duckduckgo_search(query)
+
+    if not search_results:
+        print("No results found.")
+        continue
+
+    print("\nResults found:")
     for i in range(0, len(search_results), 3):
-        print(*search_results[i:i+3], sep='           ')  
-    # Địa chỉ file cần sửa
-    pathToHostsFile = r"C:\Windows\System32\Drivers\etc\hosts"
+        print(*search_results[i:i + 3], sep='           ')
 
     try:
         # Đọc nội dung hiện tại của file hosts
         with open(pathToHostsFile, 'r', encoding='utf-8') as file:
             existing_lines = file.readlines()
+
         # Ghi thêm các domain mới
         with open(pathToHostsFile, 'a', encoding='utf-8') as file:
             for domain in search_results:
-                if f"127.0.0.1       {domain}\n" not in existing_lines:
-                    file.write(f"127.0.0.1       {domain}\n")
-        print(f"\nTHE DATA HAS BEEN LOGGED {pathToHostsFile}.")
-        print(f"ALL THE WEBSITE HAS BEEN BLOCKED!!!")
+                entry = f"127.0.0.1       {domain}\n"
+                if not any(domain in line for line in existing_lines):
+                    file.write(entry)
+
+        print(f"\nThe data has been logged in {pathToHostsFile}.")
+        print("All websites have been blocked!")
+
         input("Press Enter to continue...")
         os.system('cls' if os.name == 'nt' else 'clear')
+
     except PermissionError:
         print("ERROR: No administrator permission!")
     except Exception as e:
-        print(f"ERROR: Unknow!")
+        print(f"ERROR: {e}")
