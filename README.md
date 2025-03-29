@@ -31,26 +31,27 @@ This Python script automates the process of blocking websites based on Google se
     -   Press Enter to continue or Ctrl+C to exit.
 
 ## Script Functionality
-
+  
 -   **`get_domains_from_serpapi(query, location, hl, gl, google_domain, api_key)`:**
-    -      Takes a search query and optional parameters (location, language, etc.).
-    -      Uses SerpAPI to perform a Google search.
-    -      Extracts domain names from the search result URLs.
-    -      Returns a list of unique domain names.
+    - Takes a search query and optional parameters (location, language, etc.).
+    - Uses SerpAPI to perform a Google search.
+    - Extracts domain names from the search result URLs.
+    - Returns a list of unique domain names.
+    
 -   **`is_admin()`:**
-    -      Checks if the script is running with administrative privileges.
-    -      Returns `True` if running as admin, `False` otherwise.
+    - Checks if the script is running with administrative privileges.
+    - Returns `True` if running as admin, `False` otherwise.
 -   **`run_as_admin()`:**
-    -      Requests administrative privileges if the script is not already running as admin.
-    -      Restarts the script with elevated privileges.
+    - Requests administrative privileges if the script is not already running as admin.
+    - Restarts the script with elevated privileges.
 -   **Main Loop:**
-    -      Prompts the user for a search query.
-    -      Calls `get_domains_from_serpapi` to get the domains.
-    -      Prints the extracted domain names.
-    -      Appends the domains to the `hosts` file (`C:\Windows\System32\Drivers\etc\hosts`).
-    -   Handles `PermissionError` if the script does not have administrator right.
-    -   Handles generic Exceptions.
-    -   Clear the console after each search.
+    - Prompts the user for a search query.
+    - Calls `get_domains_from_serpapi` to get the domains.
+    - Prints the extracted domain names.
+    - Appends the domains to the `hosts` file (`C:\Windows\System32\Drivers\etc\hosts`).
+    - Handles `PermissionError` if the script does not have administrator right.
+    - Handles generic Exceptions.
+    - Clear the console after each search.
 
 ## Important Notes
 
