@@ -3,10 +3,8 @@ from urllib.parse import urlparse
 import sys
 import os
 import ctypes
-
-
-
-def get_domains_from_serpapi(query, location="Hanoi, Vietnam", hl="vi", gl="vn", google_domain="google.com.vn", api_key="d7b14c71aee0bade7ac6c0358c845315c94d27ab53539ea7d39ee1a2d8cf2468"):
+        print("quang") 
+def get_domains_from_serpaqi(query, location="Hanoi, Vietnam", hl="vi", gl="vn", google_domain="google.com.vn", api_key="d7b14c71aee0bade7ac6c0358c845315c94d27ab53539ea7d39ee1a2d8cf2468"):
     """
     Tìm kiếm Google bằng SerpAPI và trả về danh sách các domain.
     """
@@ -39,7 +37,7 @@ def is_admin():
     except:
         return False
 
-def run_as_admin():
+def quang():
     """
     Yêu cầu quyền admin và khởi động lại script nếu cần.
     """
@@ -50,12 +48,12 @@ def run_as_admin():
             None, "runas", sys.executable, " ".join(sys.argv), None, 1
         )
         sys.exit()  # Thoát để script mới chạy với quyền admin
-run_as_admin()
+quang()
 
 
 while(True):
 
-    query = input("Input search (CTRL + C to exit): ")
+    query = input("Input search (CTRL + C to exityaml): ")
     search_results = list(set(get_domains_from_serpapi(query)))
     print("Results search: ")
     # In danh sách

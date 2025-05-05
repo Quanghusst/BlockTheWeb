@@ -48,14 +48,7 @@ This Python script automates the process of blocking websites based on Google se
     - Prompts the user for a search query.
     - Calls `get_domains_from_serpapi` to get the domains.
     - Prints the extracted domain names.
-    - Appends the domains to the `hosts` file (`C:\Windows\System32\Drivers\etc\hosts`).
-    - Handles `PermissionError` if the script does not have administrator right.
-    - Handles generic Exceptions.
-    - Clear the console after each search.
-
-## Important Notes
-
--   Modifying the `hosts` file can affect your system's network behavior. Use with caution.
+    - Appends the domains to the `hosts` file (``). Handles `PermissionError` if the script does not have administrator right. Handles generic Exceptions. Clear the console after each search. ## Important Notes Modifying the `hosts` file can affect your system's network behavior. Use with caution.
 -   Ensure you have the necessary permissions to modify the `hosts` file.
 -   The script is designed for Windows systems. The `hosts` file path may vary on other operating systems.
 -   Always use a valid SerpAPI API key.
