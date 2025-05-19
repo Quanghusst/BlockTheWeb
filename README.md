@@ -12,8 +12,8 @@ This Python script automates the process of blocking websites based on Google se
 ## How to Use
 
 1.  **Install Dependencies:**
-    ```bash
-    pip install google-search-results
+    ```bash    
+    pip install -r requirements.txt
     ```
 2.  **Replace API Key:**
     -   Open the Python script (`main.py`).
